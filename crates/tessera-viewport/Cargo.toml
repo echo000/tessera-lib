@@ -1,0 +1,25 @@
+[package]
+name = "tessera-viewport"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+description = "Headless wgpu preview renderer for Tessera: models, animations, images and materials."
+
+[dependencies]
+# porter-lib is used only for asset data types (models, images, math) and the
+# shared gpu device; all rendering here is our own.
+porter-gpu.workspace = true
+porter-math.workspace = true
+porter-model.workspace = true
+porter-texture.workspace = true
+porter-utils.workspace = true
+wgpu = { version = "30.0", default-features = false, features = ["std", "wgsl", "metal", "vulkan"] }
+
+serde.workspace = true
+indexmap = { workspace = true, optional = true }
+porter-world = { workspace = true, optional = true }
+
+[features]
+normal-maps = []
+worlds = ["dep:porter-world", "dep:indexmap"]

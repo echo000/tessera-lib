@@ -1,0 +1,77 @@
+[package]
+name = "tessera-app"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+description = "Tessera application shell built on gpui."
+
+[dependencies]
+# porter-lib, required for public api compatibility with porter-app.
+porter-utils.workspace = true
+porter-math.workspace = true
+porter-texture.workspace = true
+porter-animation.workspace = true
+porter-audio.workspace = true
+porter-model.workspace = true
+porter-threads.workspace = true
+porter-world = { workspace = true, optional = true }
+tessera-viewport = { path = "../tessera-viewport" }
+
+# UI stuff
+gpui = { version = "0.2.2", default-features = false }
+image = { version = "0.25", default-features = false }
+
+# Update + Download
+isahc = { version = "2.0.2", default-features = false, features = ["native-tls", "text-decoding"] }
+self-replace = "1.5"
+semver = "1.0.26"
+zip = { version = "5.1.1", default-features = false, features = ["deflate"] }
+indexmap.workspace = true
+
+serde.workspace = true
+serde_json.workspace = true
+bitflags.workspace = true
+directories.workspace = true
+rfd.workspace = true
+raw-window-handle.workspace = true
+
+[target.'cfg(target_os = "windows")'.dependencies]
+windows-sys.workspace = true
+
+[target.'cfg(target_os = "macos")'.dependencies]
+gpui = { version = "0.2.2", default-features = false, features = ["font-kit"] }
+
+[target.'cfg(target_os = "linux")'.dependencies]
+gpui = { version = "0.2.2", default-features = false, features = ["font-kit", "wayland", "x11"] }
+
+[features]
+default = ["windows-manifest"]
+# Embeds gpui's application manifest. Disable default features to embed your own instead.
+windows-manifest = ["gpui/windows-manifest"]
+
+# Most of these are just yoinked from porter-app for similar compatibility
+# Enables animation assets.
+animations = []
+animations-bake = ["animations"]
+# Enables material assets.
+materials = []
+# Enables sound assets.
+sounds = []
+# Enables Raw Files
+raw-files = []
+
+# Enables loading of multiple files at once.
+multi-file = []
+# Enables sRGB gamma correction for model material previews.
+srgb-preview = []
+# Enables preview to start opened with the app.
+start-preview = []
+# Enables sound conversion.
+sounds-convertible = []
+# Enables normal map conversion.
+normal-maps-convertible = []
+# Enables forcing assets as rawfiles
+raw-files-forcible = ["raw-files"]
+
+worlds = ["dep:porter-world", "tessera-viewport/worlds"]

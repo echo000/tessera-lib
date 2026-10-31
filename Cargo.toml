@@ -1,0 +1,44 @@
+[workspace]
+members = ["crates/tessera-app", "crates/tessera-viewport"]
+resolver = "2"
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.96"
+license = "GPL-3.0-or-later"
+
+[workspace.dependencies]
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+bitflags = "2.9"
+directories = "6.0"
+rfd = { version = "0.17", default-features = false, features = ["gtk3", "common-controls-v6"] }
+raw-window-handle = { version = "0.6", default-features = false }
+indexmap = "2.11"
+windows-sys = { version = "0.61", default-features = false, features = [
+    "Win32_Foundation", "Win32_UI_Shell", "Win32_UI_WindowsAndMessaging",
+    "Win32_Graphics_Gdi", "Win32_Media_Audio", "Win32_Media_KernelStreaming",
+    "Win32_System_Threading", "Win32_System_Console", "Win32_System_ProcessStatus",
+    "Win32_System_WindowsProgramming", "Win32_System_Diagnostics_Debug",
+    "Win32_UI_Input_KeyboardAndMouse", "Win32_System_LibraryLoader", "Win32_UI_HiDpi",
+    "Win32_Networking_WinHttp", "Wdk_System_SystemInformation",
+] }
+porter-animation = { git = "https://github.com/dtzxporter/porter-lib", rev = "b35e9e5266be370a09791d417c186dd80f3342a9" }
+porter-audio = { git = "https://github.com/dtzxporter/porter-lib", rev = "b35e9e5266be370a09791d417c186dd80f3342a9" }
+porter-gpu = { git = "https://github.com/dtzxporter/porter-lib", rev = "b35e9e5266be370a09791d417c186dd80f3342a9" }
+porter-math = { git = "https://github.com/dtzxporter/porter-lib", rev = "b35e9e5266be370a09791d417c186dd80f3342a9" }
+porter-model = { git = "https://github.com/dtzxporter/porter-lib", rev = "b35e9e5266be370a09791d417c186dd80f3342a9" }
+porter-texture = { git = "https://github.com/dtzxporter/porter-lib", rev = "b35e9e5266be370a09791d417c186dd80f3342a9" }
+porter-threads = { git = "https://github.com/dtzxporter/porter-lib", rev = "b35e9e5266be370a09791d417c186dd80f3342a9" }
+porter-utils = { git = "https://github.com/dtzxporter/porter-lib", rev = "b35e9e5266be370a09791d417c186dd80f3342a9" }
+porter-world = { git = "https://github.com/dtzxporter/porter-lib", rev = "b35e9e5266be370a09791d417c186dd80f3342a9" }
+
+[profile.dev]
+opt-level = 2
+
+[profile.release]
+lto = "fat"
+codegen-units = 1
+strip = true
+panic = "abort"
